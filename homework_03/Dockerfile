@@ -1,3 +1,5 @@
+# "docker run -it -p 8000:8000 app" <-- for start
+
 FROM python:3.9-buster
 
 ENV PYHTONUNBUFFERED=1
