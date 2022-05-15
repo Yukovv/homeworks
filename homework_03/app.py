@@ -12,3 +12,9 @@ def view():
     "GET /ping/"
     """
     return {"message": "pong"}
+
+
+@app.get("/")
+def root():
+    return {"message": "this is a root"}
+
