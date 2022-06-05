@@ -67,12 +67,6 @@ async def async_main():
         fetch_json(POSTS_DATA_URL),
     )
 
-    for usr in users_data:
-        print(usr)
-    print()
-    for pst in posts_data:
-        print(pst)
-
     async with Session() as session:
         await create_users(session, users_data)
         await create_posts(session, posts_data)
