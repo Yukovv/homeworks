@@ -1,8 +1,6 @@
 """
 создайте асинхронные функции для выполнения запросов к ресурсам (используйте aiohttp)
 """
-import asyncio
-
 import aiohttp
 
 USERS_DATA_URL = "https://jsonplaceholder.typicode.com/users"
