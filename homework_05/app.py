@@ -14,3 +14,12 @@
 from flask import Flask
 
 app = Flask(__name__)
+
+
+@app.get("/")
+def index_view():
+    return f"It's an index view"
+
+
+if __name__ == "__main__":
+    app.run(debug=True)
