@@ -10,8 +10,8 @@
     <ul class="list-group">
       {% for element in elements_list %}
         <li class="list-group-item">
-          {{ template = 'user_details' if list_name == 'users' else 'post_details' }}
-          {{ name = element.username if list_name == 'users' else element.title }}
+          {% template = 'user_details' if list_name == 'users' else 'post_details' %}
+          {% name = element.username if list_name == 'users' else element.title %}
           <a class="text-decoration-none" href="{{ url_for(template, element_id=element.id) }}">
             {{ name }}
           </a>
