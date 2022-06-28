@@ -2,6 +2,7 @@ from os import getenv
 
 from flask import Flask, request, render_template, flash, url_for
 from flask_migrate import Migrate
+from werkzeug.exceptions import NotFound
 
 from models.database import db
 from models import User, Post
@@ -29,3 +30,14 @@ def users_list():
 def posts_list():
     posts = Post.query.all()
     return render_template("list.html", elements_list=posts, list_name="posts")
+
+
+@app.route("/posts/<int:post_id>", methods=["GET", "DELETE"], endpoint="post_details")
+def get_post_by_id(post_id: int):
+    post = Post.query.get(post_id)
+    if post is None:
+        raise NotFound(f"Post #{post_id} not found!")
+
+    if request.method == "GET":
+        return render_template("post_details", post=post)
+
