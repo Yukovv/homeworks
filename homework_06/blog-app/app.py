@@ -41,3 +41,14 @@ def get_post_by_id(post_id: int):
     if request.method == "GET":
         return render_template("post_details", post=post)
 
+
+@app.route("/users/<int:post_id>", methods=["GET", "DELETE"], endpoint="user_details")
+def get_user_by_id(user_id: int):
+    user = User.query.get(user_id)
+    if user is None:
+        raise NotFound(f"User #{user_id} not found!")
+
+    if request == "GET":
+        return render_template("user_details", user=user)
+
+

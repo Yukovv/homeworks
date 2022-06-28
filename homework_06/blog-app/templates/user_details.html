@@ -1,0 +1,33 @@
+{% extends 'base_html.html' %}
+
+{% block title %}
+  User #{{ user.id }}
+{% endblock %}
+
+{% block body %}
+  <h1>
+    User {{ repr(user.username) }}
+  </h1>
+
+  {% user_posts = user.posts %}
+  {% if user_posts %}
+    <h2>
+      {{ repr(user.username) }}'s posts:
+    </h2>
+    <ul class="list-group">
+      {% for post in user_posts %}
+        <li class="list-group-item">
+          <a class="text-decoration-none" href="{{ url_for('post_details', post=post) }}">
+            {{ post.title }}
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <div>
+      <strong>No posts.</strong>
+    </div>
+  {% endif %}
+
+
+{% endblock %}
