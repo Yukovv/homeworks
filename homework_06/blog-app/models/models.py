@@ -21,8 +21,8 @@ class User(Base):
 
 
 class Post(Base):
-    user_id = Column(Integer, ForeignKey("users.id"), nullable=False, unique=False)
+    user_id = Column(Integer, ForeignKey("users.id", ondelete='CASCADE'), nullable=False, unique=False)
     title = Column(String, nullable=False, default="", server_default="")
     body = Column(String, nullable=False, default="", server_default="")
 
-    user = relationship("User", back_populates="posts", ondelete='CASCADE')
+    user = db.relationship("User", back_populates="posts")
