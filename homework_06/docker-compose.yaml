@@ -4,7 +4,7 @@ services:
   blog:
     build:
       context: .
-      dockerfile: ./docker-build/blog/Dockerfile
+      dockerfile: ./docker-build/Dockerfile
     environment:
       CONFIG: ProductionConfig
       SQLALCHEMY_DATABASE_URI: postgresql+psycopg2://username:passwd!@pg:5432/blog
