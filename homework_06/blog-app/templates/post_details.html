@@ -5,14 +5,27 @@
 {% endblock %}
 
 {% block body %}
-<h1>
-  Post {{ repr(post.title.title()) }}
-  by <a href="{{ url_for('user_details', user_id=post.user.id) }}">{{ post.user.username }}</a>
-</h1>
+  <h1>
+    Post {{ repr(post.title.title()) }}
+    by <a href="{{ url_for('user_details', user_id=post.user.id) }}">{{ post.user.username }}</a>
+  </h1>
 
-<div>
-  <p>{{ post.body }}</p>
-</div>
+  <div>
+    <p>{{ post.body }}</p>
+  </div>
 
+  <br>
+  <div>
+    <button
+        type="button"
+        class="btn btn-outline-danger btn-sm"
+        data-bs-toggle="modal"
+        data-bs-target="#modal-del-product"
+        onclick="deleteItem()">
+      Delete post
+    </button>
+  </div>
+
+  <script src="{{ url_for('static', filename='js/delete.js') }}"></script>
 
 {% endblock %}

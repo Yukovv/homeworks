@@ -5,6 +5,7 @@ from flask import Flask, request, render_template, flash, url_for
 from flask_migrate import Migrate
 from sqlalchemy.exc import IntegrityError, DatabaseError
 from werkzeug.exceptions import NotFound, InternalServerError
+from werkzeug.utils import redirect
 
 from models.database import db
 from models import User, Post
@@ -45,6 +46,14 @@ def get_post_by_id(post_id: int):
 
     if request.method == "GET":
         return render_template("post_details.html", post=post)
+
+    title = post.title
+    user_id = post.user.id
+    db.session.delete(post)
+    db.session.commit()
+    flash(f"Deleted post {title!r}", category="warning")
+    url = url_for('user_details', user_id=user_id)
+    return redirect(url)
 
 
 @app.route("/users/<int:post_id>", methods=["GET", "DELETE"], endpoint="user_details")
