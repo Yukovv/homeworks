@@ -36,5 +36,19 @@
     </a>
   </div>
 
+  <br>
+  <div>
+    <button
+        type="button"
+        class="btn btn-outline-danger btn-sm"
+        data-bs-toggle="modal"
+        data-bs-target="#modal-del-product"
+        onclick="deleteItem()">
+      Delete user
+    </button>
+  </div>
+
+  <script src="{{ url_for('static', filename='js/delete.js') }}"></script>
+
 
 {% endblock %}

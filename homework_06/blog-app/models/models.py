@@ -17,7 +17,7 @@ class User(Base):
     username = Column(String, unique=True)
     email = Column(String)
 
-    posts = relationship("Post", back_populates="user")
+    posts = relationship("Post", back_populates="user", cascade='all, delete-orphan', passive_deletes = True)
 
 
 class Post(Base):
@@ -25,4 +25,4 @@ class Post(Base):
     title = Column(String, nullable=False, default="", server_default="")
     body = Column(String, nullable=False, default="", server_default="")
 
-    user = relationship("User", back_populates="posts")
+    user = relationship("User", back_populates="posts", ondelete='CASCADE')

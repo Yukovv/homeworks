@@ -65,6 +65,13 @@ def get_user_by_id(user_id: int):
     if request.method == "GET":
         return render_template("user_details.html", user=user)
 
+    username = user.username
+    db.session.delete(user)
+    db.session.commit()
+    flash(f"Deleted user {username!r}", category="warning")
+    url = url_for('users')
+    return redirect(url)
+
 
 @app.route("/add_user/", methods=["GET", "POST"], endpoint="add_user")
 def add_user():
@@ -116,7 +123,4 @@ def add_post(user_id: int):
         raise InternalServerError(f"could not save user {title!r}")
 
     flash(f"Created new post: {title!r}", category="success")
-
-
-
 
