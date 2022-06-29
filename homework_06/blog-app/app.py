@@ -1,11 +1,14 @@
+import logging
 from os import getenv
 
 from flask import Flask, request, render_template, flash, url_for
 from flask_migrate import Migrate
-from werkzeug.exceptions import NotFound
+from sqlalchemy.exc import IntegrityError, DatabaseError
+from werkzeug.exceptions import NotFound, InternalServerError
 
 from models.database import db
 from models import User, Post
+from forms import UserForm
 
 app = Flask(__name__)
 config_name = "config.%s" % getenv("Config", "DevelopmentConfig")
@@ -13,6 +16,8 @@ app.config.from_object(config_name)
 
 db.init_app(app)
 migrate = Migrate(app, db, compare_type=True)
+
+log = logging.getLogger(__name__)
 
 
 @app.route("/", endpoint="index")
@@ -39,7 +44,7 @@ def get_post_by_id(post_id: int):
         raise NotFound(f"Post #{post_id} not found!")
 
     if request.method == "GET":
-        return render_template("post_details", post=post)
+        return render_template("post_details.html", post=post)
 
 
 @app.route("/users/<int:post_id>", methods=["GET", "DELETE"], endpoint="user_details")
@@ -48,7 +53,33 @@ def get_user_by_id(user_id: int):
     if user is None:
         raise NotFound(f"User #{user_id} not found!")
 
-    if request == "GET":
-        return render_template("user_details", user=user)
+    if request.method == "GET":
+        return render_template("user_details.html", user=user)
+
+
+@app.route("/add_user/", methods=["GET", "POST"], endpoint="add_user")
+def add_user():
+    form = UserForm()
+    if request.method == "GET":
+        return render_template("add_user.html", form=form)
+
+    username = form.username.data
+    email = form.email.data
+
+    user = User(username=username, email=email)
+    db.session.add(user)
+    try:
+        db.session.commit()
+    except IntegrityError:
+        error_text = f"Could not save user {username!r}, probably this name is not unique"
+        form.form_errors.append(error_text)
+        return render_template("add_user.html", form=form), 400
+    except DatabaseError:
+        log.exception("could not save user %r", username)
+        raise InternalServerError(f"could not save user {username!r}")
+
+    flash(f"Created new user: {username}", category="success")
+
+
 
 

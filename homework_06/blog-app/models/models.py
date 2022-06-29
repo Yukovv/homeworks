@@ -14,7 +14,6 @@ class Base(db.Model):
 
 
 class User(Base):
-    name = Column(String)
     username = Column(String, unique=True)
     email = Column(String)
 
