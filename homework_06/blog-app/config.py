@@ -2,7 +2,7 @@ from os import getenv
 
 SQLALCHEMY_DATABASE_URI = getenv(
     "SQLALCHEMY_DATABASE_URI",
-    "postgresql+psycopg2://john:passwd!@127.0.0.1:5434/blog",
+    "postgresql+psycopg2://username:passwd!@127.0.0.1:5434/blog",
 )
 
 
