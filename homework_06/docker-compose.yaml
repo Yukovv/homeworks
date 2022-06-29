@@ -1,0 +1,46 @@
+version: "3.9"
+
+services:
+  blog:
+    build:
+      context: .
+      dockerfile: ./docker-build/blog/Dockerfile
+    environment:
+      CONFIG: ProductionConfig
+      SQLALCHEMY_DATABASE_URI: postgresql+psycopg2://username:passwd!@pg:5432/blog
+    ports:
+      - "127.0.0.1:8000:80"
+    restart: always
+    networks:
+      - app-network
+    depends_on:
+      pg:
+        condition: service_healthy
+
+  pg:
+    image: postgres
+    environment:
+      POSTGRES_DB: blog
+      POSTGRES_USER: username
+      POSTGRES_PASSWORD: passwd!
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - db-data:/var/lib/postgresql/data/pgdata
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready"]
+      interval: 6s
+      timeout: 5s
+      retries: 5
+    ports:
+      - "127.0.0.1:5434:5432"
+    networks:
+      - app-network
+
+
+volumes:
+  db-data:
+
+
+networks:
+  app-network:
+    driver: bridge
