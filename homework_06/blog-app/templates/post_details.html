@@ -1,4 +1,4 @@
-{% extends 'base_html.html' %}
+{% extends 'base.html' %}
 
 {% block title %}
   Post #{{ post.id }}
@@ -7,7 +7,7 @@
 {% block body %}
 <h1>
   Post {{ repr(post.title.title()) }}
-  by {{ post.user.username }}
+  by <a href="{{ url_for('user_details', user_id=post.user.id) }}">{{ post.user.username }}</a>
 </h1>
 
 <div>

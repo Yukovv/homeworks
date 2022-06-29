@@ -1,4 +1,4 @@
-{% extends 'base_html.html' %}
+{% extends 'base.html' %}
 
 {% block title %}
   User #{{ user.id }}
@@ -28,6 +28,13 @@
       <strong>No posts.</strong>
     </div>
   {% endif %}
+
+  <br>
+  <div>
+    <a href="{{ url_for('add_post', user_id=user.id)}}">
+      Add post for user
+    </a>
+  </div>
 
 
 {% endblock %}

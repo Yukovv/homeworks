@@ -8,7 +8,7 @@ from werkzeug.exceptions import NotFound, InternalServerError
 
 from models.database import db
 from models import User, Post
-from forms import UserForm
+from forms import UserForm, PostForm
 
 app = Flask(__name__)
 config_name = "config.%s" % getenv("Config", "DevelopmentConfig")
@@ -79,6 +79,34 @@ def add_user():
         raise InternalServerError(f"could not save user {username!r}")
 
     flash(f"Created new user: {username}", category="success")
+
+
+@app.route("/<int:user_id>/add_post/", methods=["GET", "POST"], endpoint="add_post")
+def add_post(user_id: int):
+    user = User.query.get(user_id)
+    if user is None:
+        raise NotFound(f"User #{user_id} not found!")
+
+    form = PostForm()
+    if request.method == "GET":
+        return render_template("add_post.html", form=form)
+
+    title = form.title.data
+    body = form.body.data
+
+    post = Post(user_id=user_id, title=title, body=body)
+    db.session.add(post)
+    try:
+        db.session.commit()
+    except IntegrityError:
+        error_text = f"Could not save post {title!r}, probably this title is not unique"
+        form.form_errors.append(error_text)
+        return render_template("add_user.html", form=form), 400
+    except DatabaseError:
+        log.exception("could not save post %r", title)
+        raise InternalServerError(f"could not save user {title!r}")
+
+    flash(f"Created new post: {title!r}", category="success")
 
 
 
