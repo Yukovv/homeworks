@@ -17,7 +17,7 @@ class User(Base):
     username = Column(String, unique=True)
     email = Column(String)
 
-    posts = relationship("Post", back_populates="user", cascade='all, delete-orphan', passive_deletes = True)
+    posts = relationship("Post", back_populates="user", cascade='all, delete-orphan', passive_deletes=True)
 
 
 class Post(Base):
