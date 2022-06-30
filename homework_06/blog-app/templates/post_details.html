@@ -6,8 +6,8 @@
 
 {% block body %}
   <h1>
-    Post {{ repr(post.title.title()) }}
-    by <a href="{{ url_for('user_details', user_id=post.user.id) }}">{{ post.user.username }}</a>
+    Post "{{ post.title.title() }}"
+    by <a href="{{ url_for('user_details', element_id=post.user.id) }}">{{ post.user.username }}</a>
   </h1>
 
   <div>

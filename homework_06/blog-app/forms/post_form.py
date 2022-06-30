@@ -13,5 +13,4 @@ class PostForm(FlaskForm):
     body = StringField(
         label="Post body",
         name="body",
-        default="Some text",
     )

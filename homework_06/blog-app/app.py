@@ -38,11 +38,11 @@ def posts_list():
     return render_template("list.html", elements_list=posts, list_name="posts")
 
 
-@app.route("/posts/<int:post_id>", methods=["GET", "DELETE"], endpoint="post_details")
-def get_post_by_id(post_id: int):
-    post = Post.query.get(post_id)
+@app.route("/posts/<int:element_id>", methods=["GET", "DELETE"], endpoint="post_details")
+def get_post_by_id(element_id: int):
+    post = Post.query.get(element_id)
     if post is None:
-        raise NotFound(f"Post #{post_id} not found!")
+        raise NotFound(f"Post #{element_id} not found!")
 
     if request.method == "GET":
         return render_template("post_details.html", post=post)
@@ -52,15 +52,15 @@ def get_post_by_id(post_id: int):
     db.session.delete(post)
     db.session.commit()
     flash(f"Deleted post {title!r}", category="warning")
-    url = url_for('user_details', user_id=user_id)
+    url = url_for('user_details', element_id=user_id)
     return redirect(url)
 
 
-@app.route("/users/<int:post_id>", methods=["GET", "DELETE"], endpoint="user_details")
-def get_user_by_id(user_id: int):
-    user = User.query.get(user_id)
+@app.route("/users/<int:element_id>", methods=["GET", "DELETE"], endpoint="user_details")
+def get_user_by_id(element_id: int):
+    user = User.query.get(element_id)
     if user is None:
-        raise NotFound(f"User #{user_id} not found!")
+        raise NotFound(f"User #{element_id} not found!")
 
     if request.method == "GET":
         return render_template("user_details.html", user=user)
@@ -124,3 +124,5 @@ def add_post(user_id: int):
 
     flash(f"Created new post: {title!r}", category="success")
 
+if __name__ == "__main__":
+    app.run()
