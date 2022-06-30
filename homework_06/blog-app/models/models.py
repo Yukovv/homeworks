@@ -1,26 +1,22 @@
 from sqlalchemy import Column, String, Integer, ForeignKey
-from sqlalchemy.orm import relationship, declared_attr
 
 from .database import db
 
 
-class Base(db.Model):
-
-    @declared_attr
-    def __tablename__(cls):
-        return f"{cls.__name__.lower()}s"
+class User(db.Model):
+    __tablename__ = 'users'
 
     id = Column(Integer, unique=True, nullable=False, primary_key=True)
-
-
-class User(Base):
     username = Column(String, unique=True)
     email = Column(String)
 
-    posts = relationship("Post", back_populates="user", cascade='all, delete-orphan', passive_deletes=True)
+    posts = db.relationship("Post", back_populates="user", cascade='all, delete-orphan', passive_deletes=True)
 
 
-class Post(Base):
+class Post(db.Model):
+    __tablename__ = 'posts'
+
+    id = Column(Integer, unique=True, nullable=False, primary_key=True)
     user_id = Column(Integer, ForeignKey("users.id", ondelete='CASCADE'), nullable=False, unique=False)
     title = Column(String, nullable=False, default="", server_default="")
     body = Column(String, nullable=False, default="", server_default="")
