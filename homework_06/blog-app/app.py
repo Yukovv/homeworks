@@ -95,6 +95,8 @@ def add_user():
         raise InternalServerError(f"could not save user {username!r}")
 
     flash(f"Created new user: {username}", category="success")
+    url = url_for("users")
+    return redirect(url)
 
 
 @app.route("/<int:user_id>/add_post/", methods=["GET", "POST"], endpoint="add_post")
@@ -123,6 +125,9 @@ def add_post(user_id: int):
         raise InternalServerError(f"could not save user {title!r}")
 
     flash(f"Created new post: {title!r}", category="success")
+    url = url_for('user_details', element_id=user_id)
+    return redirect(url)
+
 
 if __name__ == "__main__":
     app.run()
