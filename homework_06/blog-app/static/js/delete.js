@@ -9,3 +9,4 @@ function deleteItem() {
     };
     xhttp.open("DELETE", window.location, true)
     xhttp.send();
+}
