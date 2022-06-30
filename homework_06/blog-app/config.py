@@ -17,7 +17,7 @@ class Config:
 
 
 class TestingConfig(Config):
-    TESTING = False
+    TESTING = True
     DEBUG = True
 
 
@@ -26,6 +26,5 @@ class DevelopmentConfig(Config):
 
 
 class ProductionConfig(Config):
-    DEBUG = False
     ENV = "production"
     SECRET_KEY = "prodoiuwfkewrjrkwrnrtyasdfgsupersecret"
