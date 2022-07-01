@@ -53,7 +53,7 @@ def get_post_by_id(element_id: int):
     db.session.commit()
     flash(f"Deleted post {title!r}", category="warning")
     url = url_for('user_details', element_id=user_id)
-    return redirect(url)
+    return {"ok": True, "url": url}
 
 
 @app.route("/users/<int:element_id>", methods=["GET", "DELETE"], endpoint="user_details")
@@ -70,7 +70,7 @@ def get_user_by_id(element_id: int):
     db.session.commit()
     flash(f"Deleted user {username!r}", category="warning")
     url = url_for('users')
-    return redirect(url)
+    return {"ok": True, "url": url}
 
 
 @app.route("/add_user/", methods=["GET", "POST"], endpoint="add_user")
