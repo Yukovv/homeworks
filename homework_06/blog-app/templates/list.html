@@ -31,6 +31,10 @@
       <a href="{{ url_for('add_user')}}">
         Add User
       </a>
+    {% else %}
+      <a href="{{ url_for('users') }}">
+        Select a user to add a post
+      </a>
     {% endif %}
   </div>
 {% endblock %}
