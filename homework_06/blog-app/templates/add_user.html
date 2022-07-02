@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  Add User
+{% endblock %}
+
+{% block body %}
+  <h1>Add user</h1>
+  <form method="post">
+
+    {{ form.hidden_tag() }}
+
+    {{ form.username.label(class='form-label') }}
+    {{ form.username(class='form-control', placeholder='John') }}
+
+    {{ form.email.label(class='form-label') }}
+    {{ form.email(class='form-control', placeholder='john@email.com') }}
+
+    {% if form.errors %}
+      <div class="errors my-2">
+        {% for name, errors in form.errors.items() %}
+          <div class="alert alert-danger">
+            {% if name %}
+              <strong>{{ name }}</strong>
+            {% endif %}
+            <ul>
+              {% for error in errors %}
+                <li>{{ error }}</li>
+              {% endfor %}
+            </ul>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    <button type="submit" class="btn btn-outline-success my-2">Create</button>
+  </form>
+
+{% endblock %}

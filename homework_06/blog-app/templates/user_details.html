@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  User #{{ user.id }}
+{% endblock %}
+
+{% block body %}
+  <h1>
+    User {{ user.username }}
+  </h1>
+
+  {% set user_posts = user.posts %}
+  {% if user_posts %}
+    <h2>
+      {{ user.username }}'s posts:
+    </h2>
+    <ul class="list-group">
+      {% for post in user_posts %}
+        <li class="list-group-item">
+          <a class="text-decoration-none" href="{{ url_for('post_details', element_id=post.id) }}">
+            {{ post.title }}
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <div>
+      <strong>No posts.</strong>
+    </div>
+  {% endif %}
+
+  <br>
+  <div>
+    <a href="{{ url_for('add_post', user_id=user.id)}}">
+      Add post for user
+    </a>
+  </div>
+
+  <br>
+  <div>
+    <button
+        type="button"
+        class="btn btn-outline-danger btn-sm"
+        data-bs-toggle="modal"
+        data-bs-target="#modal-del-product">
+      Delete user
+    </button>
+  </div>
+
+  <div class="modal fade" id="modal-del-product" tabindex="-1" aria-labelledby="modal-delete-product-label" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <div class="modal-body">
+          Are you sure to delete user {{ user.username }}? All user's posts will be deleted too!
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-danger" onclick="deleteItem()">Delete</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script src="{{ url_for('static', filename='js/delete.js') }}"></script>
+
+
+{% endblock %}

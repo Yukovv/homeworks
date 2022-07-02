@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  {{ list_name.title() }} List
+{% endblock %}
+
+{% block body %}
+  <h1>{{ list_name.title() }}</h1>
+
+  {% if elements_list %}
+    <ul class="list-group">
+      {% for element in elements_list %}
+        <li class="list-group-item">
+          {% set template = 'user_details' if list_name == 'users' else 'post_details' %}
+          {% set name = element.username if list_name == 'users' else element.title %}
+          <a class="text-decoration-none" href="{{ url_for(template, element_id=element.id) }}">
+            {{ name }}
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <div>
+      <strong>No {{ list_name }}</strong>
+    </div>
+  {% endif %}
+
+  <br>
+  <div>
+    {% if list_name == "users" %}
+      <a href="{{ url_for('add_user')}}">
+        Add User
+      </a>
+    {% else %}
+      <a href="{{ url_for('users') }}">
+        Select a user to add a post
+      </a>
+    {% endif %}
+  </div>
+{% endblock %}
