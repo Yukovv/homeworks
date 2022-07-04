@@ -30,3 +30,17 @@ def post_details(request: HttpRequest, pk: int):
         "post": post,
     }
     return render(request, "blog/post_details.html", context=context)
+
+
+def user_details(request: HttpRequest, pk: int):
+    user = get_object_or_404(
+        User.objects,
+        pk=pk,
+    )
+    user_posts = Post.objects.filter(user=user)
+
+    context = {
+        "user": user,
+        "user_posts": user_posts,
+    }
+    return render(request, "blog/user_details.html", context=context)
