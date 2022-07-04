@@ -1,5 +1,5 @@
 from django.http import HttpRequest
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 
 from .models import User, Post
 
@@ -18,3 +18,15 @@ def posts(request: HttpRequest):
         "posts": posts,
     }
     return render(request, 'blog/posts.html', context=context)
+
+
+def post_details(request: HttpRequest, pk: int):
+    post = get_object_or_404(
+        Post.objects.select_related("user"),
+        pk=pk,
+    )
+
+    context = {
+        "post": post,
+    }
+    return render(request, "blog/post_details.html", context=context)
