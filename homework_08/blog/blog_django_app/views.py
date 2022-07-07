@@ -5,24 +5,9 @@ from django.views.generic import ListView, DetailView
 from .models import User, Post
 
 
-# def users(request: HttpRequest):
-#     users = User.objects.all()
-#     context = {
-#         "users": users,
-#     }
-#     return render(request, 'blog/users.html', context=context)
-
 class UserListView(ListView):
     model = User
     template_name = "blog/users.html"
-
-#
-# def posts(request: HttpRequest):
-#     posts = Post.objects.select_related("user").all()
-#     context = {
-#         "posts": posts,
-#     }
-#     return render(request, 'blog/posts.html', context=context)
 
 
 class PostListView(ListView):
@@ -30,32 +15,17 @@ class PostListView(ListView):
     template_name = "blog/posts.html"
 
 
-# def post_details(request: HttpRequest, pk: int):
-#     post = get_object_or_404(
-#         Post.objects.select_related("user"),
-#         pk=pk,
-#     )
-#
-#     context = {
-#         "post": post,
-#     }
-#     return render(request, "blog/post_details.html", context=context)
-
-
 class PostDetailsView(DetailView):
     queryset = Post.objects.select_related("user")
     template_name = "blog/post_details.html"
 
 
-def user_details(request: HttpRequest, pk: int):
-    user = get_object_or_404(
-        User.objects,
-        pk=pk,
-    )
-    user_posts = Post.objects.filter(user=user)
+class UserDetailsView(DetailView):
+    model = User
+    template_name = "blog/user_details.html"
 
-    context = {
-        "user": user,
-        "user_posts": user_posts,
-    }
-    return render(request, "blog/user_details.html", context=context)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["user_posts"] = Post.objects.filter(user=self.object).all()
+        return context
+
