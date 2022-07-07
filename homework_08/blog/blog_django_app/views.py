@@ -1,15 +1,20 @@
 from django.http import HttpRequest
 from django.shortcuts import render, get_object_or_404
+from django.views.generic import ListView, DetailView
 
 from .models import User, Post
 
 
-def users(request: HttpRequest):
-    users = User.objects.all()
-    context = {
-        "users": users,
-    }
-    return render(request, 'blog/users.html', context=context)
+# def users(request: HttpRequest):
+#     users = User.objects.all()
+#     context = {
+#         "users": users,
+#     }
+#     return render(request, 'blog/users.html', context=context)
+
+class UserListView(ListView):
+    model = User
+    template_name = "blog/users.html"
 
 
 def posts(request: HttpRequest):

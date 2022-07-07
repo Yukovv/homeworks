@@ -7,9 +7,9 @@
 {% block body %}
   <h1>Users: </h1>
 
-  {% if users %}
+  {% if object_list %}
     <ul class="list-group">
-      {% for user in users %}
+      {% for user in object_list %}
         <li class="list-group-item">
           <a class="text-decoration-none" href="{% url 'blog_django_app:user_details' pk=user.id %}">
             {{ user.name }}
