@@ -51,15 +51,12 @@
     </nav>
 
     <div class="container my-4">
-
-      <h1>
-        {% block body %}
+      {% block body %}
           Base Body
-        {% endblock %}
-      </h1>
-
+      {% endblock %}
     </div>
 
+    <br>
     <script src="{% static 'blog/js/bootstrap.bundle.min.js' %}"></script>
 
   </body>
