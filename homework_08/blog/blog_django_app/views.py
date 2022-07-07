@@ -26,20 +26,25 @@ class UserListView(ListView):
 
 
 class PostListView(ListView):
-    model = Post
+    queryset = Post.objects.select_related("user")
     template_name = "blog/posts.html"
 
 
-def post_details(request: HttpRequest, pk: int):
-    post = get_object_or_404(
-        Post.objects.select_related("user"),
-        pk=pk,
-    )
+# def post_details(request: HttpRequest, pk: int):
+#     post = get_object_or_404(
+#         Post.objects.select_related("user"),
+#         pk=pk,
+#     )
+#
+#     context = {
+#         "post": post,
+#     }
+#     return render(request, "blog/post_details.html", context=context)
 
-    context = {
-        "post": post,
-    }
-    return render(request, "blog/post_details.html", context=context)
+
+class PostDetailsView(DetailView):
+    queryset = Post.objects.select_related("user")
+    template_name = "blog/post_details.html"
 
 
 def user_details(request: HttpRequest, pk: int):
