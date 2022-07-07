@@ -16,13 +16,18 @@ class UserListView(ListView):
     model = User
     template_name = "blog/users.html"
 
+#
+# def posts(request: HttpRequest):
+#     posts = Post.objects.select_related("user").all()
+#     context = {
+#         "posts": posts,
+#     }
+#     return render(request, 'blog/posts.html', context=context)
 
-def posts(request: HttpRequest):
-    posts = Post.objects.select_related("user").all()
-    context = {
-        "posts": posts,
-    }
-    return render(request, 'blog/posts.html', context=context)
+
+class PostListView(ListView):
+    model = Post
+    template_name = "blog/posts.html"
 
 
 def post_details(request: HttpRequest, pk: int):

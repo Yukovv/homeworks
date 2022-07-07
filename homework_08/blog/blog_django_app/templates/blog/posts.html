@@ -7,9 +7,9 @@
 {% block body %}
   <h1>Posts: </h1>
 
-  {% if posts %}
+  {% if post_list %}
     <ul class="list-group">
-      {% for post in posts %}
+      {% for post in post_list %}
         <li class="list-group-item">
           <a class="text-decoration-none">
             <strong>
