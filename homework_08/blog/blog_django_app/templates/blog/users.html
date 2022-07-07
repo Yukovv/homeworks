@@ -12,7 +12,7 @@
       {% for user in object_list %}
         <li class="list-group-item">
           <a class="text-decoration-none" href="{% url 'blog_django_app:user_details' pk=user.id %}">
-            {{ user.name }}
+            {{ user.username }}
           </a>
         </li>
       {% endfor %}

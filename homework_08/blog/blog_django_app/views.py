@@ -6,7 +6,7 @@ from .models import User, Post
 
 
 class UserListView(ListView):
-    model = User
+    queryset = User.objects.filter(is_staff=False)
     template_name = "blog/users.html"
 
 

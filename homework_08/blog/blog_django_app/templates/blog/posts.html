@@ -14,7 +14,7 @@
           <a class="text-decoration-none">
             <strong>
               <a href="{% url 'blog_django_app:post_details' pk=post.id %}">"{{ post.title }}"</a>
-            </strong>  by {{ post.user.name }}
+            </strong>  by {{ post.user.username }}
           </a>
         </li>
       {% endfor %}

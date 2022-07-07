@@ -7,7 +7,7 @@
 {% block body %}
   <h1>
     Post "{{ post.title|title }}"
-    by <a href="{% url 'blog_django_app:user_details' pk=post.user.id %}">{{ post.user.name }}</a>
+    by <a href="{% url 'blog_django_app:user_details' pk=post.user.id %}">{{ post.user.username }}</a>
   </h1>
 
   <div>
