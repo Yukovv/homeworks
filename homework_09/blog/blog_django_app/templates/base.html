@@ -43,6 +43,9 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div class="navbar-nav">
+            {% if request.user.is_authenticated  %}
+              <a class="nav-link" href="{% url 'blog_django_app:user_details' pk=request.user.pk %}">My profile</a>
+            {% endif %}
             <a class="nav-link" href="{% url 'blog_django_app:users' %}">Users</a>
             <a class="nav-link" href="{% url 'blog_django_app:posts' %}">Posts</a>
             <a class="nav-link" href="{% url 'blog_django_app:post_creation' %}">Create post</a>

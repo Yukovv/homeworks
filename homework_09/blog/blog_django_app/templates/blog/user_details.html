@@ -33,10 +33,12 @@
     </div>
   {% endif %}
 
-  <br>
-  <div>
-    <a class="btn btn-dark" href="{% url 'blog_django_app:users' %}">All users.</a>
-  </div>
+  {% if request.user.pk != user.pk %}
+    <br>
+    <div>
+      <a class="btn btn-dark" href="{% url 'blog_django_app:users' %}">All users.</a>
+    </div>
+  {% endif %}
 
 
 {% endblock %}
