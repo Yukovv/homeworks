@@ -9,13 +9,16 @@ UserModel: User = get_user_model()
 
 
 class UserProfile(models.Model):
-    user = models.OneToOneField(
+    user: UserModel = models.OneToOneField(
         UserModel,
         on_delete=models.CASCADE,
         primary_key=True,
     )
 
     bio = models.TextField(max_length=300, blank=True)
+
+    def __str__(self):
+        return f"{self.user.username} profile"
 
 
 @receiver(post_save, sender=UserModel)
