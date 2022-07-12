@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'debug_toolbar',
 
     'blog_django_app.apps.BlogDjangoAppConfig',
+    'blog_authorization.apps.BlogAuthorizationConfig',
 ]
 
 MIDDLEWARE = [

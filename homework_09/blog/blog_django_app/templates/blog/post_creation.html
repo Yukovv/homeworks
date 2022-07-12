@@ -1,10 +1,10 @@
-{% extends 'blog/base.html' %}
+{% extends 'base.html' %}
 
 {% block title %}
   Create Post
 {% endblock %}
 
-{% block body %}
+{% block content %}
   <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
