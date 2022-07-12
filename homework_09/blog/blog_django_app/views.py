@@ -1,7 +1,9 @@
 from django.http import HttpRequest
 from django.shortcuts import render, get_object_or_404
-from django.views.generic import ListView, DetailView
+from django.urls import reverse
+from django.views.generic import ListView, DetailView, CreateView
 
+from .forms import PostCreationForm
 from .models import User, Post
 
 
@@ -28,4 +30,13 @@ class UserDetailsView(DetailView):
         context = super().get_context_data(**kwargs)
         context["user_posts"] = Post.objects.filter(user=self.object).all()
         return context
+
+
+class PostCreateView(CreateView):
+    model = Post
+    form_class = PostCreationForm
+    template_name = "blog/post_creation.html"
+
+    def get_success_url(self):
+        return reverse("blog_django_app:post_details", kwargs={"pk": self.object.pk})
 
