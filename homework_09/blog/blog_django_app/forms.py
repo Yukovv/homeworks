@@ -7,6 +7,6 @@ class PostCreationForm(ModelForm):
 
     class Meta:
         model = Post
-        fields = "title", "body", "user"
+        fields = "title", "body"
 
 

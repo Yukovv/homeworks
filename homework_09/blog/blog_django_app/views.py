@@ -1,7 +1,7 @@
-from django.http import HttpRequest
-from django.shortcuts import render, get_object_or_404
 from django.urls import reverse, reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, DeleteView
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 
 from .forms import PostCreationForm
 from .models import User, Post
@@ -32,13 +32,19 @@ class UserDetailsView(DetailView):
         return context
 
 
-class PostCreateView(CreateView):
+class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
     form_class = PostCreationForm
     template_name = "blog/post_creation.html"
 
     def get_success_url(self):
         return reverse("blog_django_app:post_details", kwargs={"pk": self.object.pk})
+
+    def form_valid(self, form):
+        self.object: Post = form.save(commit=False)
+        self.object.user = self.request.user
+        self.object.save()
+        return super().form_valid(form)
 
 
 class PostDeleteView(DeleteView):
