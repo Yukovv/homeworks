@@ -1,7 +1,7 @@
 from django.http import HttpRequest
 from django.shortcuts import render, get_object_or_404
-from django.urls import reverse
-from django.views.generic import ListView, DetailView, CreateView
+from django.urls import reverse, reverse_lazy
+from django.views.generic import ListView, DetailView, CreateView, DeleteView
 
 from .forms import PostCreationForm
 from .models import User, Post
@@ -40,3 +40,8 @@ class PostCreateView(CreateView):
     def get_success_url(self):
         return reverse("blog_django_app:post_details", kwargs={"pk": self.object.pk})
 
+
+class PostDeleteView(DeleteView):
+    model = Post
+    success_url = reverse_lazy("blog_django_app:posts")
+    template_name = "blog/post_confirm_delete.html"

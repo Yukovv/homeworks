@@ -19,5 +19,9 @@
     <a class="btn btn-dark" href="{% url 'blog_django_app:posts' %}">All posts.</a>
   </div>
 
+  <br>
+  <div>
+    <a class="btn btn-danger" href="{% url 'blog_django_app:post_delete' pk=post.pk %}">Delete post.</a>
+  </div>
 
 {% endblock %}
