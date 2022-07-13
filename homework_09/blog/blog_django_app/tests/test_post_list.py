@@ -19,7 +19,6 @@ class PostsTestCase(TestCase):
 
         posts_list = Post.objects.order_by("id")
         posts_in_context = response.context["post_list"]
-        print(posts_in_context)
         self.assertEqual(len(posts_list), len(posts_in_context))
         for post1, post2 in zip(posts_list, posts_in_context):
             self.assertEqual(post1.pk, post2.pk)
