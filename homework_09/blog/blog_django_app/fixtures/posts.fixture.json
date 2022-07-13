@@ -1,0 +1,20 @@
+[
+  {
+    "model": "blog_django_app.post",
+    "pk": 2,
+    "fields": {
+      "title": "Cool title",
+      "body": "amazing text",
+      "user": 2
+    }
+  },
+  {
+    "model": "blog_django_app.post",
+    "pk": 3,
+    "fields": {
+      "title": "2",
+      "body": "2",
+      "user": 3
+    }
+  }
+]
