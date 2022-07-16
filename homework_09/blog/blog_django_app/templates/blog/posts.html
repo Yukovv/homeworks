@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  Posts List
+{% endblock %}
+
+{% block content %}
+  <h1>Posts: </h1>
+
+  {% if post_list %}
+    <ul class="list-group">
+      {% for post in post_list %}
+        <li class="list-group-item">
+          <a class="text-decoration-none">
+            <strong>
+              <a href="{% url 'blog_django_app:post_details' pk=post.id %}">"{{ post.title }}"</a>
+            </strong>  by {{ post.user.username }}
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <div>
+      <strong>No posts.</strong>
+    </div>
+  {% endif %}
+
+  <hr>
+  <div>
+    <a href="{% url 'blog_django_app:post_creation' %}">Create a new post.</a>
+  </div>
+
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  Delete post {{ post.title }}
+{% endblock %}
+
+{% block content %}
+  <h1>Delete post <strong>"{{ post.title }}"</strong>?</h1>
+  <form method="post">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="Delete!">
+  </form>
+  <hr>
+  <div>
+    <a href="{% url 'blog_django_app:posts' %}">Back to posts list</a>
+  </div>
+   <div>
+    <a href="{% url 'blog_django_app:post_details' post.pk %}">Back to post</a>
+  </div>
+{% endblock %}
